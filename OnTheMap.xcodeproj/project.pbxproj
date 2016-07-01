@@ -8,22 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		147586EE1D25B2930092C5DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147586ED1D25B2930092C5DC /* AppDelegate.swift */; };
-		147586F01D25B2930092C5DC /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147586EF1D25B2930092C5DC /* FirstViewController.swift */; };
-		147586F21D25B2930092C5DC /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147586F11D25B2930092C5DC /* SecondViewController.swift */; };
 		147586F51D25B2930092C5DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147586F31D25B2930092C5DC /* Main.storyboard */; };
 		147586F71D25B2930092C5DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 147586F61D25B2930092C5DC /* Assets.xcassets */; };
 		147586FA1D25B2930092C5DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147586F81D25B2930092C5DC /* LaunchScreen.storyboard */; };
+		147587051D26C0010092C5DC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587041D26C0010092C5DC /* MapViewController.swift */; };
+		147587071D26C5DF0092C5DC /* UdacityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587061D26C5DF0092C5DC /* UdacityAPI.swift */; };
+		147587091D26E3180092C5DC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587081D26E3180092C5DC /* LoginViewController.swift */; };
+		1475870C1D26E9F20092C5DC /* LoginTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475870B1D26E9F20092C5DC /* LoginTextFields.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		147586EA1D25B2930092C5DC /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		147586ED1D25B2930092C5DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		147586EF1D25B2930092C5DC /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		147586F11D25B2930092C5DC /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		147586F41D25B2930092C5DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		147586F61D25B2930092C5DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		147586F91D25B2930092C5DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		147586FB1D25B2930092C5DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		147587041D26C0010092C5DC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		147587061D26C5DF0092C5DC /* UdacityAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityAPI.swift; sourceTree = "<group>"; };
+		147587081D26E3180092C5DC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		1475870B1D26E9F20092C5DC /* LoginTextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextFields.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,49 @@
 		147586EC1D25B2930092C5DC /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				1475870A1D26E9D00092C5DC /* Views */,
+				147587031D26BBDB0092C5DC /* Services */,
+				147587021D26BBD30092C5DC /* Models */,
+				147587011D26BBBC0092C5DC /* Controllers */,
 				147586ED1D25B2930092C5DC /* AppDelegate.swift */,
-				147586EF1D25B2930092C5DC /* FirstViewController.swift */,
-				147586F11D25B2930092C5DC /* SecondViewController.swift */,
 				147586F31D25B2930092C5DC /* Main.storyboard */,
 				147586F61D25B2930092C5DC /* Assets.xcassets */,
 				147586F81D25B2930092C5DC /* LaunchScreen.storyboard */,
 				147586FB1D25B2930092C5DC /* Info.plist */,
 			);
 			path = OnTheMap;
+			sourceTree = "<group>";
+		};
+		147587011D26BBBC0092C5DC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				147587041D26C0010092C5DC /* MapViewController.swift */,
+				147587081D26E3180092C5DC /* LoginViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		147587021D26BBD30092C5DC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		147587031D26BBDB0092C5DC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				147587061D26C5DF0092C5DC /* UdacityAPI.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		1475870A1D26E9D00092C5DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1475870B1D26E9F20092C5DC /* LoginTextFields.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				147586F21D25B2930092C5DC /* SecondViewController.swift in Sources */,
+				1475870C1D26E9F20092C5DC /* LoginTextFields.swift in Sources */,
+				147587091D26E3180092C5DC /* LoginViewController.swift in Sources */,
 				147586EE1D25B2930092C5DC /* AppDelegate.swift in Sources */,
-				147586F01D25B2930092C5DC /* FirstViewController.swift in Sources */,
+				147587051D26C0010092C5DC /* MapViewController.swift in Sources */,
+				147587071D26C5DF0092C5DC /* UdacityAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +332,7 @@
 				147587001D25B2930092C5DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
