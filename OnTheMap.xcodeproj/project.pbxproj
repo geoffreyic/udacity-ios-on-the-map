@@ -15,6 +15,15 @@
 		147587071D26C5DF0092C5DC /* UdacityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587061D26C5DF0092C5DC /* UdacityAPI.swift */; };
 		147587091D26E3180092C5DC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587081D26E3180092C5DC /* LoginViewController.swift */; };
 		1475870C1D26E9F20092C5DC /* LoginTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475870B1D26E9F20092C5DC /* LoginTextFields.swift */; };
+		1475870E1D2D86C90092C5DC /* ParseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475870D1D2D86C90092C5DC /* ParseAPI.swift */; };
+		147587101D2D98870092C5DC /* StudentLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475870F1D2D98870092C5DC /* StudentLocationModel.swift */; };
+		147587121D2F1A650092C5DC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 147587111D2F1A650092C5DC /* MapKit.framework */; };
+		147587161D3029770092C5DC /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587151D3029770092C5DC /* ListViewController.swift */; };
+		147587181D304D830092C5DC /* ModalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587171D304D830092C5DC /* ModalTextField.swift */; };
+		1475871A1D304ED70092C5DC /* EnterLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587191D304ED70092C5DC /* EnterLocationViewController.swift */; };
+		1475871C1D3050590092C5DC /* FindLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475871B1D3050590092C5DC /* FindLocationViewController.swift */; };
+		147587201D32C7380092C5DC /* StudentAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475871F1D32C7380092C5DC /* StudentAnnotation.swift */; };
+		147587241D32D53E0092C5DC /* LocationBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147587231D32D53E0092C5DC /* LocationBaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +37,15 @@
 		147587061D26C5DF0092C5DC /* UdacityAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityAPI.swift; sourceTree = "<group>"; };
 		147587081D26E3180092C5DC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		1475870B1D26E9F20092C5DC /* LoginTextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextFields.swift; sourceTree = "<group>"; };
+		1475870D1D2D86C90092C5DC /* ParseAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseAPI.swift; sourceTree = "<group>"; };
+		1475870F1D2D98870092C5DC /* StudentLocationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocationModel.swift; sourceTree = "<group>"; };
+		147587111D2F1A650092C5DC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		147587151D3029770092C5DC /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		147587171D304D830092C5DC /* ModalTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalTextField.swift; sourceTree = "<group>"; };
+		147587191D304ED70092C5DC /* EnterLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterLocationViewController.swift; sourceTree = "<group>"; };
+		1475871B1D3050590092C5DC /* FindLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindLocationViewController.swift; sourceTree = "<group>"; };
+		1475871F1D32C7380092C5DC /* StudentAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentAnnotation.swift; sourceTree = "<group>"; };
+		147587231D32D53E0092C5DC /* LocationBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationBaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				147587121D2F1A650092C5DC /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +63,7 @@
 		147586E11D25B2930092C5DC = {
 			isa = PBXGroup;
 			children = (
+				147587111D2F1A650092C5DC /* MapKit.framework */,
 				147586EC1D25B2930092C5DC /* OnTheMap */,
 				147586EB1D25B2930092C5DC /* Products */,
 			);
@@ -78,6 +98,10 @@
 			children = (
 				147587041D26C0010092C5DC /* MapViewController.swift */,
 				147587081D26E3180092C5DC /* LoginViewController.swift */,
+				147587151D3029770092C5DC /* ListViewController.swift */,
+				147587191D304ED70092C5DC /* EnterLocationViewController.swift */,
+				1475871B1D3050590092C5DC /* FindLocationViewController.swift */,
+				147587231D32D53E0092C5DC /* LocationBaseViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -85,6 +109,8 @@
 		147587021D26BBD30092C5DC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1475870F1D2D98870092C5DC /* StudentLocationModel.swift */,
+				1475871F1D32C7380092C5DC /* StudentAnnotation.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -93,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				147587061D26C5DF0092C5DC /* UdacityAPI.swift */,
+				1475870D1D2D86C90092C5DC /* ParseAPI.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -101,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				1475870B1D26E9F20092C5DC /* LoginTextFields.swift */,
+				147587171D304D830092C5DC /* ModalTextField.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -137,6 +165,11 @@
 				TargetAttributes = {
 					147586E91D25B2930092C5DC = {
 						CreatedOnToolsVersion = 7.3.1;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -176,10 +209,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				147587181D304D830092C5DC /* ModalTextField.swift in Sources */,
 				1475870C1D26E9F20092C5DC /* LoginTextFields.swift in Sources */,
+				147587101D2D98870092C5DC /* StudentLocationModel.swift in Sources */,
 				147587091D26E3180092C5DC /* LoginViewController.swift in Sources */,
 				147586EE1D25B2930092C5DC /* AppDelegate.swift in Sources */,
 				147587051D26C0010092C5DC /* MapViewController.swift in Sources */,
+				1475870E1D2D86C90092C5DC /* ParseAPI.swift in Sources */,
+				147587241D32D53E0092C5DC /* LocationBaseViewController.swift in Sources */,
+				1475871A1D304ED70092C5DC /* EnterLocationViewController.swift in Sources */,
+				147587201D32C7380092C5DC /* StudentAnnotation.swift in Sources */,
+				147587161D3029770092C5DC /* ListViewController.swift in Sources */,
+				1475871C1D3050590092C5DC /* FindLocationViewController.swift in Sources */,
 				147587071D26C5DF0092C5DC /* UdacityAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,8 +12,21 @@ public class UdacityAPI{
     
     static let instance:UdacityAPI = UdacityAPI()
     
-    init(){
-        
+    private var sessionToken:String? = nil
+    
+    private var userKey:String!
+    public func getUserKey()->String{
+        return userKey
+    }
+    
+    private var firstName:String!
+    public func getFirstName()->String{
+        return firstName
+    }
+    
+    private var lastName:String!
+    public func getLastName()->String{
+        return lastName
     }
     
     private func handleInMainThread(codeInMain: ()->Void){
@@ -22,7 +35,56 @@ public class UdacityAPI{
         }
     }
     
-    public func authorizeAndGetSession(username:String, password:String, completionHandler: (sessionToken: String) -> Void, errorHandler: (errorMsg: String) -> Void){
+    private func checkErrorsParseObject(data: NSData?, error:NSError?, errorHandler: (errorMsg: String) -> Void) -> AnyObject?{
+        print(error)
+        
+        
+        if error != nil {
+            print(error)
+            self.handleInMainThread(){
+                errorHandler(errorMsg: "Could not fetch data")
+            }
+            return nil
+        }
+        
+        if data == nil{
+            print(error)
+            self.handleInMainThread(){
+                errorHandler(errorMsg: "No data available")
+            }
+            return nil
+        }
+        
+        // add check for http response code
+        
+        let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
+        print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+        
+        
+        var objectData:AnyObject!
+        
+        do{
+            objectData = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+        }catch{
+            self.handleInMainThread(){
+                errorHandler(errorMsg: "Could not parse JSON object")
+            }
+            return nil
+        }
+        
+        if let object = objectData as? [String:AnyObject],
+            let error = object["error"] as? String{
+            self.handleInMainThread(){
+                errorHandler(errorMsg: error)
+            }
+            return nil
+        }
+        
+        return objectData
+
+    }
+    
+    public func authorizeAndGetSession(username:String, password:String, completionHandler: () -> Void, errorHandler: (errorMsg: String) -> Void){
         
         let requestBody = "{\"udacity\": {\"username\": \"" + username + "\", \"password\": \"" + password + "\"}}"
         
@@ -32,45 +94,32 @@ public class UdacityAPI{
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = requestBody.dataUsingEncoding(NSUTF8StringEncoding)
         
+        
         let session = NSURLSession.sharedSession()
         
+        
         let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                print(error)
-                self.handleInMainThread(){
-                    errorHandler(errorMsg: "Could not fetch data")
-                }
+            
+            let objectData = self.checkErrorsParseObject(data, error: error, errorHandler: errorHandler)
+            if(objectData == nil){
                 return
             }
             
-            if data == nil{
-                print(error)
+            if let obj1 = objectData as? [String:AnyObject],
+                status = obj1["status"] as? Int,
+                error = obj1["error"] as? String where
+                status != 200
+            {
                 self.handleInMainThread(){
-                    errorHandler(errorMsg: "No data available")
-                }
-                return
-            }
-            
-            // add check for http response code
-            
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-            
-            
-            var objectData:AnyObject!
-            
-            do{
-                objectData = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
-            }catch{
-                self.handleInMainThread(){
-                    errorHandler(errorMsg: "Could not parse JSON object")
+                    errorHandler(errorMsg: error)
                 }
                 return
             }
             
             guard let obj1 = objectData as? [String:AnyObject],
                 obj2 = obj1["account"] as? [String:AnyObject],
-                registered = obj2["registered"] as? Bool
+                registered = obj2["registered"] as? Bool,
+                userKey = obj2["key"] as? String
             else{
                 self.handleInMainThread(){
                     errorHandler(errorMsg: "Could not find whether valid account or not")
@@ -93,16 +142,19 @@ public class UdacityAPI{
                     }
                     return
             }
+            self.sessionToken = sessionTokenId
+            self.userKey = userKey
             
             self.handleInMainThread(){
-                completionHandler(sessionToken: sessionTokenId)
+                completionHandler()
             }
+            
             
         }
         task.resume()
     }
     
-    public func deleteSession(){
+    public func deleteSession(completionHandler: () -> Void, errorHandler: (errorMsg: String) -> Void){
         
         let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
         request.HTTPMethod = "DELETE"
@@ -120,19 +172,50 @@ public class UdacityAPI{
         
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil { // Handle error…
+            
+            
+            let objectData = self.checkErrorsParseObject(data, error: error, errorHandler: errorHandler)
+            if(objectData == nil){
                 return
-            }
-            if data == nil {
-                return
-                //handle error
             }
             
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            self.handleInMainThread(){
+                completionHandler()
+            }
         }
         task.resume()
         
+    }
+    
+    public func getUser(userId: String, completionHandler: () -> Void, errorHandler: (errorMsg: String) -> Void){
+    
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/" + userId)!)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            
+            let objectData = self.checkErrorsParseObject(data, error: error, errorHandler: errorHandler)
+            if(objectData == nil){
+                return
+            }
+            
+            guard let object = objectData as? [String:AnyObject],
+                let user = object["user"] as? [String:AnyObject],
+                let firstName = user["first_name"] as? String,
+                let lastName = user["last_name"] as? String else{
+                    self.handleInMainThread(){
+                        errorHandler(errorMsg: "Could not find user data")
+                    }
+                    return
+            }
+            
+            self.lastName = lastName
+            self.firstName = firstName
+            
+            self.handleInMainThread(){
+                completionHandler()
+            }
+        }
+        task.resume()
     }
 
 }

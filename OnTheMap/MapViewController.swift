@@ -7,13 +7,30 @@
 //
 
 import UIKit
+import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: LocationBaseViewController, MKMapViewDelegate, UIGestureRecognizerDelegate {
+    
+    @IBOutlet weak var mapView: MKMapView!
+    
+    private var studentLocations: [StudentLocationModel]!
+    
+    private var annotationViewSelected: MKPinAnnotationView?
+    private var annotationTapAction: UITapGestureRecognizer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        segueId = "MapToAddLocation"
+        
+        annotationTapAction = UITapGestureRecognizer(target: self, action: #selector(MapViewController.annotationTapped(_:)))
+        annotationTapAction.delegate = self
+        
+        if (ParseAPI.instance.getStudentLocations().count == 0){
+            ParseAPI.instance.loadStudentLocations(200, skip: 0, order: "updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
+        }else{
+            getLocationsComplete()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,29 +38,70 @@ class MapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func logoutAction(sender: AnyObject) {
-        UdacityAPI.instance.deleteSession()
+    
+    private func getLocationsComplete(){
+        studentLocations = ParseAPI.instance.getStudentLocations()
         
-        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
-        UIApplication.sharedApplication().keyWindow?.rootViewController = viewController;
+        var annotations = [StudentAnnotation]()
+        
+        
+        for student in studentLocations{
+            annotations.append(StudentAnnotation(student: student))
+        }
+        
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        
+        self.mapView.addAnnotations(annotations)
+    }
+    private func getLocationsError(errorMsg: String){
+        displayErrorAlert(self, errorMsg: errorMsg)
     }
     
     
-    @IBAction func locationAction(sender: AnyObject) {
-    }
+    
     
     @IBAction func refreshAction(sender: AnyObject) {
+        ParseAPI.instance.loadStudentLocations(200, skip: 0, order: "updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func annotationTapped(sender: MapViewController){
+        if let studentAnnotation = annotationViewSelected!.annotation as? StudentAnnotation,
+            let url = NSURL(string: studentAnnotation.student.mediaURL)
+        {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
-    */
+    
+    
+    
+    // map view functions
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotation = annotation as! StudentAnnotation
+        
+        let id = "pin"
+        var view: MKPinAnnotationView
+        
+        if let v = mapView.dequeueReusableAnnotationViewWithIdentifier(id) as? MKPinAnnotationView {
+            v.annotation = annotation
+            view = v
+        } else {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: id)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+        }
+        return view
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        view.addGestureRecognizer(annotationTapAction)
+        annotationViewSelected = view as? MKPinAnnotationView
+    }
+    
+    
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
+        annotationViewSelected = nil
+        view.removeGestureRecognizer(annotationTapAction)
+    }
 
 }

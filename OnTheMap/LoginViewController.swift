@@ -14,11 +14,10 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -27,25 +26,41 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonAction(sender: AnyObject) {
+        activityIndicator.startAnimating()
         UdacityAPI.instance.authorizeAndGetSession(
             usernameTextField.text!,
             password: passwordTextField.text!,
             completionHandler: completeLogin,
-            errorHandler:  { (errorMsg) in
-                let alertController = UIAlertController(title: "Error", message: errorMsg, preferredStyle: UIAlertControllerStyle.Alert)
-                
-                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
-                    print("OK")
-                }
-                alertController.addAction(okAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
+            errorHandler: displayError
         )
     }
     
-    func completeLogin(sessionToken: String){
+    func completeLogin(){
+        UdacityAPI.instance.getUser(
+            UdacityAPI.instance.getUserKey(),
+            completionHandler: completeFetchingUserData,
+            errorHandler: displayError
+        )
+    }
+    
+    func completeFetchingUserData(){
+        activityIndicator.stopAnimating()
+        
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = mainStoryboard.instantiateViewControllerWithIdentifier("TabsController") as! UITabBarController
         UIApplication.sharedApplication().keyWindow?.rootViewController = viewController;
     }
+    
+    func displayError(errorMsg:String){
+        activityIndicator.stopAnimating()
+        
+        let alertController = UIAlertController(title: "Error", message: errorMsg, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
+            print("OK")
+        }
+        alertController.addAction(okAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
 }
