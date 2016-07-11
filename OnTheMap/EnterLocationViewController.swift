@@ -8,15 +8,26 @@
 
 import UIKit
 
-class EnterLocationViewController: UIViewController {
+class EnterLocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var enterLocationTextField: ModalTextField!
     @IBOutlet weak var findOnMapSegueButton: UIButton!
+    
+    @IBOutlet weak var findOnMapBottomConstaint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // register keyboard listener
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(FindLocationViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(FindLocationViewController.keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,4 +63,36 @@ class EnterLocationViewController: UIViewController {
         }
     }
 
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    
+    // keyboard detection
+    
+    func keyboardWillAppear(notification: NSNotification){
+        
+        
+        let kHeight = getKeyboardHeight(notification)
+        
+        findOnMapBottomConstaint.constant = kHeight + 20
+        
+        
+    }
+    
+    
+    func keyboardWillDisappear(notification: NSNotification){
+        print("keyboard will disappear")
+        
+        findOnMapBottomConstaint.constant = 40
+        
+    }
+    
+    // from Building MemeMe 1.0 Classroom
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
+    }
 }

@@ -217,6 +217,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <action selector="textFieldEdited:" destination="oSq-Aw-Jfp" eventType="editingChanged" id="taj-5m-esO"/>
+                                    <outlet property="delegate" destination="oSq-Aw-Jfp" id="uKq-zb-OCI"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Where are you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFC-Ci-MgB">
@@ -270,6 +271,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="enterLocationTextField" destination="jPX-e6-6XM" id="nNS-4I-db7"/>
+                        <outlet property="findOnMapBottomConstaint" destination="PSm-sz-OX5" id="qBw-1s-Utt"/>
                         <outlet property="findOnMapSegueButton" destination="KAB-aO-bhX" id="sJt-bx-DKu"/>
                     </connections>
                 </viewController>
@@ -313,6 +315,9 @@
                                 <color key="backgroundColor" red="0.41029064910000002" green="0.55091201710000004" blue="0.98179810209999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
+                                <connections>
+                                    <outlet property="delegate" destination="TuI-jZ-Ta3" id="xKf-pb-Os0"/>
+                                </connections>
                             </textField>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-wn-QmM">
                                 <rect key="frame" x="282" y="282" width="37" height="37"/>
@@ -349,6 +354,7 @@
                         <outlet property="activityIndicator" destination="yqZ-wn-QmM" id="ro4-QE-OzA"/>
                         <outlet property="finderMap" destination="YIh-HK-rjP" id="0W3-xr-cTY"/>
                         <outlet property="mediaUrlTextField" destination="myp-Fs-6zJ" id="Rv4-5e-qbU"/>
+                        <outlet property="submitButtonViewBottomConstraint" destination="5o3-3Z-Bwf" id="F5p-W0-YEV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wav-8u-gri" userLabel="First Responder" sceneMemberID="firstResponder"/>

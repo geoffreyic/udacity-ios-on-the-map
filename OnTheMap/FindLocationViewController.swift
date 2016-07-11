@@ -15,6 +15,8 @@ class FindLocationViewController: UIViewController {
     @IBOutlet weak var mediaUrlTextField: ModalTextField!
     @IBOutlet weak var finderMap: MKMapView!
     
+    @IBOutlet weak var submitButtonViewBottomConstraint: NSLayoutConstraint!
+    
     var locationEntered:String!
     var locationFound:MKMapItem!
     
@@ -48,6 +50,14 @@ class FindLocationViewController: UIViewController {
             
             self.activityIndicator.stopAnimating()
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // register keyboard listener
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(FindLocationViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(FindLocationViewController.keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,5 +111,37 @@ class FindLocationViewController: UIViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    
+    // keyboard detection
+    
+    func keyboardWillAppear(notification: NSNotification){
+        
+        
+        let kHeight = getKeyboardHeight(notification)
+        
+        submitButtonViewBottomConstraint.constant = kHeight
+        
+        
+    }
+    
+    
+    func keyboardWillDisappear(notification: NSNotification){
+        print("keyboard will disappear")
+        
+        submitButtonViewBottomConstraint.constant = 0
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    // from Building MemeMe 1.0 Classroom
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
+    }
 
 }
