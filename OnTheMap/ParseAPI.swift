@@ -17,24 +17,9 @@ public class ParseAPI{
     private let parseRestApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     
     
-    private var locationArr:[StudentLocationModel] = []
-    
-    public func getStudentLocations()->[StudentLocationModel]{
-        
-        return locationArr
-    }
-    
-    private var studentLocation:StudentLocationModel? = nil
-    public func getStudentLocation()->StudentLocationModel?{
-        return studentLocation
-    }
-    
-    
     public func loadStudentLocations(limit:Int, skip:Int, order:String, completionHandler: () -> Void, errorHandler: (errorMsg: String) -> Void){
         
         let urlString:String = "https://api.parse.com/1/classes/StudentLocation?limit=" + NSNumber(long: limit).stringValue + "&skip=" + NSNumber(long: skip).stringValue + "&order=" + order
-        
-        print(urlString)
         
         let request = NSMutableURLRequest(URL: NSURL(string: urlString)!)
         request.addValue(self.parseApplicationId, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -56,11 +41,11 @@ public class ParseAPI{
             }
             
             
-            self.locationArr.removeAll()
+            StudentData.students.removeAll()
             
             for object in resultsArr{
                 if let dict = object as? [String:AnyObject]{
-                    self.locationArr.append(StudentLocationModel(dict: dict))
+                    StudentData.students.append(StudentLocationModel(dict: dict))
                 }else{
                     self.handleInMainThread(){
                         errorHandler(errorMsg: "error looping through array of students")
@@ -68,10 +53,6 @@ public class ParseAPI{
                     return
                 }
             }
-            
-            print("locationArr parsed")
-            
-            print(self.locationArr)
             
             self.handleInMainThread(){
                 completionHandler()
@@ -105,7 +86,7 @@ public class ParseAPI{
             }
             
             if(resultsArr.count == 0){
-                self.studentLocation = nil
+                StudentData.student = nil
                 self.handleInMainThread(){
                     completionHandler()
                 }
@@ -113,17 +94,13 @@ public class ParseAPI{
             }
             
             if let dict = resultsArr[0] as? [String:AnyObject]{
-                self.studentLocation = StudentLocationModel(dict: dict)
+                StudentData.student = StudentLocationModel(dict: dict)
             }else{
                 self.handleInMainThread(){
                     errorHandler(errorMsg: "error looping through array of students")
                 }
                 return
             }
-            
-            print("student location parsed")
-            
-            print(self.studentLocation)
             
             self.handleInMainThread(){
                 completionHandler()
@@ -189,28 +166,20 @@ public class ParseAPI{
     }
     
     private func checkErrorsParseObject(data: NSData?, error:NSError?, errorHandler: (errorMsg: String) -> Void) -> AnyObject?{
-        print(error)
-        
-        print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-        
         
         if error != nil {
-            print(error)
             self.handleInMainThread(){
-                errorHandler(errorMsg: "Could not fetch data")
+                errorHandler(errorMsg: error!.localizedDescription)
             }
             return nil
         }
         
         if data == nil{
-            print(error)
             self.handleInMainThread(){
                 errorHandler(errorMsg: "No data available")
             }
             return nil
         }
-        
-        // add check for http response code
         
         
         var objectData:AnyObject!

@@ -47,7 +47,6 @@ class FindLocationViewController: UIViewController {
             self.locationFound = response.mapItems[0]
             
             self.activityIndicator.stopAnimating()
-            self.finderMap.hidden = false
         }
     }
 
@@ -67,19 +66,19 @@ class FindLocationViewController: UIViewController {
     @IBAction func submitPressed(sender: AnyObject) {
         
         let submitModel = StudentLocationModel(
-            firstName: UdacityAPI.instance.getFirstName(),
-            lastName: UdacityAPI.instance.getLastName(),
+            firstName: StudentData.firstName!,
+            lastName: StudentData.lastName!,
             latitude: locationFound.placemark.coordinate.latitude,
             longitude: locationFound.placemark.coordinate.longitude,
             mapString: locationFound!.name!,
             mediaURL: mediaUrlTextField!.text!,
-            uniqueKey: UdacityAPI.instance.getUserKey()
+            uniqueKey: StudentData.userKey!
         )
         
-        if(ParseAPI.instance.getStudentLocation() == nil){
+        if(StudentData.student == nil){
             ParseAPI.instance.postStudentLocation(submitModel, completionHandler: submitRequestCompletionHandler, errorHandler: submitRequestErrorHandler)
         }else{
-            ParseAPI.instance.putStudentLocation(submitModel, objectId: ParseAPI.instance.getStudentLocation()!.objectId!, completionHandler: submitRequestCompletionHandler, errorHandler: submitRequestErrorHandler)
+            ParseAPI.instance.putStudentLocation(submitModel, objectId: StudentData.student!.objectId!, completionHandler: submitRequestCompletionHandler, errorHandler: submitRequestErrorHandler)
         }
         
         
@@ -91,6 +90,8 @@ class FindLocationViewController: UIViewController {
         
     }
     private func submitRequestErrorHandler(errorMsg: String){
+        activityIndicator.stopAnimating()
+        
         let alertController = UIAlertController(title: "Error", message: errorMsg, preferredStyle: UIAlertControllerStyle.Alert)
         
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in

@@ -11,16 +11,14 @@ import UIKit
 class ListViewController: LocationBaseViewController, UITableViewDelegate {
     
     @IBOutlet weak var studentLocationTableView: UITableView!
-    
-    private var studentLocations:[StudentLocationModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         segueId = "ListToAddLocation"
         
-        if (ParseAPI.instance.getStudentLocations().count == 0){
-            ParseAPI.instance.loadStudentLocations(200, skip: 0, order: "updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
+        if (StudentData.students.count == 0){
+            ParseAPI.instance.loadStudentLocations(100, skip: 0, order: "-updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
         }else{
             getLocationsComplete()
         }
@@ -33,12 +31,11 @@ class ListViewController: LocationBaseViewController, UITableViewDelegate {
     
 
     @IBAction func refreshAction(sender: AnyObject) {
-        ParseAPI.instance.loadStudentLocations(200, skip: 0, order: "updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
+        ParseAPI.instance.loadStudentLocations(100, skip: 0, order: "-updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
     }
     
     
     private func getLocationsComplete(){
-        studentLocations = ParseAPI.instance.getStudentLocations().reverse()
         
         studentLocationTableView.reloadData()
     }
@@ -53,15 +50,15 @@ class ListViewController: LocationBaseViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentLocations.count
+        return StudentData.students.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentLocationCell", forIndexPath: indexPath)
         
         
-        cell.textLabel?.text = studentLocations[indexPath.row].firstName + " " + studentLocations[indexPath.row].lastName
-        cell.detailTextLabel!.text = studentLocations[indexPath.row].mediaURL
+        cell.textLabel?.text = StudentData.students[indexPath.row].firstName + " " + StudentData.students[indexPath.row].lastName
+        cell.detailTextLabel!.text = StudentData.students[indexPath.row].mediaURL
         cell.imageView?.image = UIImage(named: "pin")
         
         return cell
@@ -71,7 +68,7 @@ class ListViewController: LocationBaseViewController, UITableViewDelegate {
         
         tableView.cellForRowAtIndexPath(indexPath)?.selected = false
         
-        if let url = NSURL(string: studentLocations[indexPath.row].mediaURL)
+        if let url = NSURL(string: StudentData.students[indexPath.row].mediaURL)
         {
             UIApplication.sharedApplication().openURL(url)
         }

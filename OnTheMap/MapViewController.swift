@@ -13,8 +13,6 @@ class MapViewController: LocationBaseViewController, MKMapViewDelegate, UIGestur
     
     @IBOutlet weak var mapView: MKMapView!
     
-    private var studentLocations: [StudentLocationModel]!
-    
     private var annotationViewSelected: MKPinAnnotationView?
     private var annotationTapAction: UITapGestureRecognizer!
 
@@ -26,8 +24,8 @@ class MapViewController: LocationBaseViewController, MKMapViewDelegate, UIGestur
         annotationTapAction = UITapGestureRecognizer(target: self, action: #selector(MapViewController.annotationTapped(_:)))
         annotationTapAction.delegate = self
         
-        if (ParseAPI.instance.getStudentLocations().count == 0){
-            ParseAPI.instance.loadStudentLocations(200, skip: 0, order: "updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
+        if (StudentData.students.count == 0){
+            ParseAPI.instance.loadStudentLocations(100, skip: 0, order: "-updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
         }else{
             getLocationsComplete()
         }
@@ -40,12 +38,11 @@ class MapViewController: LocationBaseViewController, MKMapViewDelegate, UIGestur
     
     
     private func getLocationsComplete(){
-        studentLocations = ParseAPI.instance.getStudentLocations()
         
         var annotations = [StudentAnnotation]()
         
         
-        for student in studentLocations{
+        for student in StudentData.students{
             annotations.append(StudentAnnotation(student: student))
         }
         
@@ -61,7 +58,7 @@ class MapViewController: LocationBaseViewController, MKMapViewDelegate, UIGestur
     
     
     @IBAction func refreshAction(sender: AnyObject) {
-        ParseAPI.instance.loadStudentLocations(200, skip: 0, order: "updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
+        ParseAPI.instance.loadStudentLocations(100, skip: 0, order: "-updatedAt", completionHandler: getLocationsComplete, errorHandler: getLocationsError)
     }
     
     func annotationTapped(sender: MapViewController){

@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
     
     func completeLogin(){
         UdacityAPI.instance.getUser(
-            UdacityAPI.instance.getUserKey(),
+            StudentData.userKey!,
             completionHandler: completeFetchingUserData,
             errorHandler: displayError
         )

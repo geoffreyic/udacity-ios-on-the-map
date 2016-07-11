@@ -31,8 +31,8 @@ class LocationBaseViewController: UIViewController {
     
     func openAddLocationModal(sender: UIViewController, segueId: String){
         
-        ParseAPI.instance.getStudentLocation(UdacityAPI.instance.getUserKey(), completionHandler: {
-            if(ParseAPI.instance.getStudentLocation() == nil){
+        ParseAPI.instance.getStudentLocation(StudentData.userKey!, completionHandler: {
+            if(StudentData.student == nil){
                 sender.performSegueWithIdentifier(segueId, sender: sender)
             }else{
                 let alertController = UIAlertController(title: "Location Existing", message: "A location already exists, would you like to overwrite?", preferredStyle: UIAlertControllerStyle.Alert)

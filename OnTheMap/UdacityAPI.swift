@@ -14,21 +14,6 @@ public class UdacityAPI{
     
     private var sessionToken:String? = nil
     
-    private var userKey:String!
-    public func getUserKey()->String{
-        return userKey
-    }
-    
-    private var firstName:String!
-    public func getFirstName()->String{
-        return firstName
-    }
-    
-    private var lastName:String!
-    public func getLastName()->String{
-        return lastName
-    }
-    
     private func handleInMainThread(codeInMain: ()->Void){
         dispatch_async(dispatch_get_main_queue()){
             codeInMain()
@@ -36,13 +21,12 @@ public class UdacityAPI{
     }
     
     private func checkErrorsParseObject(data: NSData?, error:NSError?, errorHandler: (errorMsg: String) -> Void) -> AnyObject?{
-        print(error)
         
         
         if error != nil {
             print(error)
             self.handleInMainThread(){
-                errorHandler(errorMsg: "Could not fetch data")
+                errorHandler(errorMsg: error!.localizedDescription)
             }
             return nil
         }
@@ -55,10 +39,8 @@ public class UdacityAPI{
             return nil
         }
         
-        // add check for http response code
         
         let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5)) /* subset response data! */
-        print(NSString(data: newData, encoding: NSUTF8StringEncoding))
         
         
         var objectData:AnyObject!
@@ -143,7 +125,7 @@ public class UdacityAPI{
                     return
             }
             self.sessionToken = sessionTokenId
-            self.userKey = userKey
+            StudentData.userKey = userKey
             
             self.handleInMainThread(){
                 completionHandler()
@@ -208,8 +190,8 @@ public class UdacityAPI{
                     return
             }
             
-            self.lastName = lastName
-            self.firstName = firstName
+            StudentData.lastName = lastName
+            StudentData.firstName = firstName
             
             self.handleInMainThread(){
                 completionHandler()

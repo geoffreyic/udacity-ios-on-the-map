@@ -301,7 +301,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="0.75257646276595747" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="ndl-AE-GbJ" firstAttribute="centerY" secondItem="qUr-dZ-UOb" secondAttribute="centerY" id="5tj-d2-xfg"/>
                                     <constraint firstAttribute="height" constant="60" id="FVN-eD-KL6"/>
@@ -314,18 +314,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                             </textField>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-wn-QmM">
-                                <rect key="frame" x="283" y="280" width="37" height="37"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-wn-QmM">
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
-                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YIh-HK-rjP">
-                                <rect key="frame" x="0.0" y="85" width="600" height="515"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YIh-HK-rjP">
+                                <rect key="frame" x="0.0" y="85" width="600" height="455"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="myp-Fs-6zJ" secondAttribute="trailing" constant="-20" id="5WY-Y5-35m"/>
                             <constraint firstItem="nVt-S5-Zzx" firstAttribute="top" secondItem="qUr-dZ-UOb" secondAttribute="bottom" id="5o3-3Z-Bwf"/>
+                            <constraint firstItem="qUr-dZ-UOb" firstAttribute="top" secondItem="YIh-HK-rjP" secondAttribute="bottom" id="BLP-RC-QUM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qUr-dZ-UOb" secondAttribute="trailing" constant="-20" id="Bdv-9l-OnT"/>
                             <constraint firstItem="myp-Fs-6zJ" firstAttribute="leading" secondItem="BSV-hG-a2q" secondAttribute="leadingMargin" constant="-20" id="NFW-Xh-qpD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YIh-HK-rjP" secondAttribute="trailing" constant="-20" id="PHb-ti-2aa"/>
@@ -334,7 +335,6 @@
                             <constraint firstItem="YIh-HK-rjP" firstAttribute="leading" secondItem="BSV-hG-a2q" secondAttribute="leadingMargin" constant="-20" id="XaB-DS-Zm7"/>
                             <constraint firstItem="yqZ-wn-QmM" firstAttribute="centerX" secondItem="BSV-hG-a2q" secondAttribute="centerX" id="dBX-ha-fA3"/>
                             <constraint firstItem="myp-Fs-6zJ" firstAttribute="top" secondItem="09g-Hv-l0b" secondAttribute="bottom" id="feP-LB-mME"/>
-                            <constraint firstItem="nVt-S5-Zzx" firstAttribute="top" secondItem="YIh-HK-rjP" secondAttribute="bottom" id="r0n-PO-Yuw"/>
                             <constraint firstItem="YIh-HK-rjP" firstAttribute="top" secondItem="myp-Fs-6zJ" secondAttribute="bottom" id="uQY-Zf-JLk"/>
                         </constraints>
                     </view>
@@ -389,8 +389,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                             </textField>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="nWg-Q9-VjW">
-                                <rect key="frame" x="282" y="381" width="37" height="37"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="nWg-Q9-VjW">
+                                <rect key="frame" x="282" y="380" width="37" height="37"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3NG-7r-FGg">
                                 <rect key="frame" x="20" y="310" width="560" height="40"/>
